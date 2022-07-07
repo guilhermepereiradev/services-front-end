@@ -9,6 +9,7 @@ import { FormFuncionarioComponent } from './components/form-funcionario/form-fun
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmarExclusaoComponent } from './components/confirmar-exclusao/confirmar-exclusao.component';
 import { SalvandoFuncionarioComponent } from './components/salvando-funcionario/salvando-funcionario.component';
+import { PodeSairComponent } from './components/pode-sair/pode-sair.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SalvandoFuncionarioComponent } from './components/salvando-funcionario/
     FuncionarioComponent,
     FormFuncionarioComponent,
     ConfirmarExclusaoComponent,
-    SalvandoFuncionarioComponent
+    SalvandoFuncionarioComponent,
+    PodeSairComponent
   ],
   imports: [
     CommonModule,
