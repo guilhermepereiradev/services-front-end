@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Novo Funcionário</h2>
+<section mat-dialog-content>
+    <form action="" [formGroup]="formFuncionario" (ngSubmit)="salvar()">
+        <div class="fotoPre">
+            <img [src]="fotoPreview != '' ? fotoPreview : fotoPerfilPadrao" alt="">
+        </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Nome</mat-label>
+            <input type="text" placeholder="Ex: John Doe" matInput formControlName="nome">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input type="email" placeholder="Ex: johndoe@email.com" matInput formControlName="email">
+        </mat-form-field>
+        <input type="file" accept="image/*" id="file-input" #fileInput (change)="recuperarFoto($event)" formControlName="foto">
+        <button type="button" mat-stroked-button color="primary" (click)="fileInput.click()">Selecione uma imagem</button>
+        <button type="submit" [disabled]="formFuncionario.invalid" mat-raised-button color="accent" id="salvar">Salvar</button>
+        
+    </form>
+</section>

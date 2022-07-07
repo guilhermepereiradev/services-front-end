@@ -1,0 +1,44 @@
+mat-card , .loader{
+    height: calc(100vh - (150px));
+    position: sticky;
+    top: 16px;
+    left: 0;
+}
+
+.loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}    
+
+#file-input{
+    display: none;
+}
+
+#submit {
+    margin-top: 16px;
+}
+
+.fotoPre{
+    margin-bottom: 16px;
+}
+.fotoPre > img{
+    object-fit: cover;
+    display: block;
+    margin: auto;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+.fotoPre > button{
+    position: absolute;
+    right: 120px;
+    top: 330px;    
+}
