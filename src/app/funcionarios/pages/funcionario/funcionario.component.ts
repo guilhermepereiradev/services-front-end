@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { SalvandoFuncionarioComponent } from '../../components/salvando-funcionario/salvando-funcionario.component';
 import { Funcionario } from '../../models/funcionario';
 import { FuncionarioService } from '../../services/funcionario.service';
@@ -32,7 +33,6 @@ export class FuncionarioComponent implements OnInit {
   
   foto!: File;
   fotoPreview!: string;
-  novoFuncionario!: Funcionario;
   naoEncontrado: boolean = false;
   desabilitar: boolean = true;
 
@@ -84,24 +84,34 @@ export class FuncionarioComponent implements OnInit {
     this.fotoPreview = reader.result as string
   }
 
-  async editarFunc(): Promise<void>{ 
+  editarFunc(){ 
     const matDialogRef = this.matDialog.open(SalvandoFuncionarioComponent);
-    this.novoFuncionario = this.formNovoFunc.value;
-    this.novoFuncionario.id = this.funcionario.id;
+    
+    
+    // o objeto entre {...obj} | cria um copia f e formNovoFunc apontam pra lugares diferentes 
+    const f: Funcionario = {...this.formNovoFunc.value};
+    f.id = this.funcionario.id;
+    f.foto = this.funcionario.foto;
+    const temFoto: boolean = this.formNovoFunc.value.foto.length > 0;
 
-    if(this.foto != undefined){
-      this.funcService.deletarImagem(this.funcionario);
-      this.novoFuncionario.foto = await this.funcService.uploadImagem(this.foto);
-    } else {
-      this.novoFuncionario.foto = this.funcionario.foto;
-    }
-
-    this.funcService.atualizarFuncionario(this.novoFuncionario).subscribe(() => {
+    const obsSalvar: Observable<any> = this.funcService.atualizarFuncionario(f, temFoto ? this.foto : undefined)
+    
+    obsSalvar.subscribe((result) => {
+      if(result instanceof Observable<Funcionario>){
+          result.subscribe((func) => {
+            matDialogRef.close();
+            this.snackBar.open("Funcionário salvo com sucesso!", "",{duration: 3000})
+            this.recuperarFuncionario(func.id);
+        })
+      }
       matDialogRef.close();
       this.snackBar.open("Funcionário salvo com sucesso!", "",{duration: 3000})
+      this.recuperarFuncionario(result.id);
     })
     
-    // this.funcService.salvarFuncionario(this.novoFuncionario, this.foto).subscribe(func => console.log(func))
+    
+    
+  
   }
 
   valorMudou(){

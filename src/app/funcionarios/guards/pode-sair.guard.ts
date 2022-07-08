@@ -26,13 +26,12 @@ export class PodeSairGuard implements CanDeactivate<FuncionarioComponent> {
       const foto = component.formNovoFunc.value.foto;
 
      
-      let querSair!: Observable<boolean>;
 
 
       if(nome != component.funcionario.nome || email != component.funcionario.email || foto.length > 0){
         
-        const dialog = this.dialogRef.open(PodeSairComponent);
-        querSair = dialog.afterClosed();
+        const dialogRef = this.dialogRef.open(PodeSairComponent);
+        let querSair: Observable<boolean> = dialogRef.afterClosed();
         return querSair;
       } else {
         return true;

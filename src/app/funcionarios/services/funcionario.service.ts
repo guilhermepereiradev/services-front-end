@@ -26,6 +26,7 @@ export class FuncionarioService {
     if(func.foto.length > 0){
       return this.storage.refFromURL(func.foto).delete().pipe(
         mergeMap( () => this.http.delete<any>(`${this.baseUrl}/${func.id}`))
+        //mergeMap tem a função de pegar dois ou mais objetos e transformar todos em um só
       )
     }
     return this.http.delete<any>(`${this.baseUrl}/${func.id}`);
@@ -59,8 +60,27 @@ export class FuncionarioService {
     )
   }
 
-  atualizarFuncionario(func: Funcionario): Observable<Funcionario>{
-    return this.http.put<Funcionario>(`${this.baseUrl}/${func.id}`, func)
+  atualizarFuncionario(func: Funcionario, foto?: File): any{
+    // se a fiti não foi passada
+    
+    if(foto == undefined){
+      return this.http.put<Funcionario>(`${this.baseUrl}/${func.id}`, func)
+    } 
+
+    // se ja existir uma foto ligada a esse funcionario, iremos deleta-la
+    if(func.foto.length > 0){
+      const inscricao = this.storage.refFromURL(func.foto).delete().subscribe( () => {
+        inscricao.unsubscribe;
+      });
+    }
+
+    return this.http.put<Funcionario>(`${this.baseUrl}/${func.id}`, func).pipe(
+      mergeMap(async (funcionarioAtualizado) => {
+      const linkFoto = await this.uploadImagem(foto)
+      funcionarioAtualizado.foto = linkFoto
+
+      return this.atualizarFuncionario(funcionarioAtualizado)
+    }))
   }
   
   // 1º Pegar a imagem

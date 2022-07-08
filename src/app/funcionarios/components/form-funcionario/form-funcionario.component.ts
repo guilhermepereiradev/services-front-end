@@ -53,6 +53,7 @@ export class FormFuncionarioComponent implements OnInit {
   salvar(): void {
     const f: Funcionario = this.formFuncionario.value
     let obsSalvar: Observable<any>
+    
     const snackBarRef = this.snackBar;
     const matDialogSalvando = this.dialogSalvando;
     matDialogSalvando.open(SalvandoFuncionarioComponent)
