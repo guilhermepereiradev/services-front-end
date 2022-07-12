@@ -48,7 +48,7 @@ export class FuncionarioComponent implements OnInit {
 
   ngOnInit(): void {
     // let idFuncionario = this.route.snapshot.paramMap.get('idFuncionario');
-    let idFuncionario = this.route.paramMap.subscribe(
+    this.route.paramMap.subscribe(
       (params) => {
         let idFuncionario = parseInt(params.get("idFuncionario") ?? '0');
 
