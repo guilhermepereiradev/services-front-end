@@ -29,7 +29,12 @@ export class ListarFuncionariosComponent implements OnInit {
     // 1º sucesso -> retorna os dados
     // 2º erro -> ocorre um erro na fonte de dados
     // 3º complete -> a fonte de dados te retorna tudo
-
+    this.funcService.atualizarFuncionariosSub$.subscribe( (precisaAtualizar) => {
+      
+      if(precisaAtualizar){
+        this.recuperarFuncionarios();
+      }
+    })
     this.recuperarFuncionarios();
   }
 
@@ -46,7 +51,6 @@ export class ListarFuncionariosComponent implements OnInit {
     )
   }
 
-  
 
   recuperarFuncionarios(): void{
     this.funcService.getFuncionarios().subscribe(
