@@ -5,8 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ConfirmarExclusaoComponent } from '../../components/confirmar-exclusao/confirmar-exclusao.component';
 import { SalvandoFuncionarioComponent } from '../../components/salvando-funcionario/salvando-funcionario.component';
 import { Funcionario } from '../../models/funcionario';
 import { FuncionarioService } from '../../services/funcionario.service';
@@ -41,7 +42,8 @@ export class FuncionarioComponent implements OnInit {
     private funcService: FuncionarioService,
     private fb: FormBuilder,
     private matDialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) { }
   
 
@@ -119,6 +121,22 @@ export class FuncionarioComponent implements OnInit {
     this.formNovoFunc.valueChanges.subscribe( valores => { // o parametro valores é um objeto que retorna os valores de cada campo do reactive forms
       this.desabilitar = !(valores.nome != this.funcionario.nome || valores.email != this.funcionario.email || valores.foto.length > 0) || this.formNovoFunc.invalid;
     })
+  }
+
+  deletarFuncionario(func: Funcionario){
+    const confirmarExclusao = this.matDialog.open(ConfirmarExclusaoComponent)
+    confirmarExclusao.afterClosed().subscribe(
+      deletar => {
+        if(deletar){
+          this.funcService.deleteFuncionario(func).subscribe(
+            sucesso => {
+              this.snackBar.open("Funcionário deletado com sucesso", "", {duration: 3000})
+              this.router.navigate(['/funcionarios'])
+            }
+          )
+        }
+      }
+    )
   }
 
   removerFoto(){

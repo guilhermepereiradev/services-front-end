@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, mergeMap, Observable, tap } from 'rxjs';
 import { Funcionario } from '../models/funcionario';
 import { AngularFireStorage } from '@angular/fire/compat/storage'; // importação do fireStorage
+import { Route, Router } from '@angular/router';
 //localhost:3000/funcionarios
 
 @Injectable({
@@ -26,11 +27,14 @@ export class FuncionarioService {
   deleteFuncionario(func: Funcionario): Observable<any>{
     if(func.foto.length > 0){
       return this.storage.refFromURL(func.foto).delete().pipe(
-        mergeMap( () => this.http.delete<any>(`${this.baseUrl}/${func.id}`))
+        mergeMap( () => this.http.delete<any>(`${this.baseUrl}/${func.id}`)),
+        tap((funcionarios) => {
+          this.atualizarFuncionariosSub$.next(true)
+        })
         //mergeMap tem a função de pegar dois ou mais objetos e transformar todos em um só
       )
     }
-    return this.http.delete<any>(`${this.baseUrl}/${func.id}`);
+    return this.http.delete<any>(`${this.baseUrl}/${func.id}`).pipe(tap(() => this.atualizarFuncionariosSub$.next(true)));
   }
 
   getFuncionarioById(id: number): Observable<Funcionario>{
