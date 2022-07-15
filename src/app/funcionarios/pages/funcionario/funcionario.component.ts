@@ -68,7 +68,6 @@ export class FuncionarioComponent implements OnInit {
           email: this.funcionario.email,
           foto: ''
           });
-          console.log(this.funcionario)
           this.fotoPreview = this.funcionario.foto;
           this.valorMudou();
       }, (erro: HttpErrorResponse) => {

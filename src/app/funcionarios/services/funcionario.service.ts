@@ -32,16 +32,28 @@ export class FuncionarioService {
 
   //http://localhost:3000/funcionarios/id
   deleteFuncionario(func: Funcionario): Observable<any>{
+    const token = this.authService.recuperarToken()
+
     if(func.foto.length > 0){
       return this.storage.refFromURL(func.foto).delete().pipe(
-        mergeMap( () => this.http.delete<any>(`${this.baseUrl}/${func.idFuncionario}`)),
+        mergeMap( () => {
+          return this.http.delete<any>(`${this.baseUrl}/${func.idFuncionario}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+        }),
         tap((funcionarios) => {
           this.atualizarFuncionariosSub$.next(true)
         })
         //mergeMap tem a função de pegar dois ou mais objetos e transformar todos em um só
       )
     }
-    return this.http.delete<any>(`${this.baseUrl}/${func.idFuncionario}`).pipe(tap(() => this.atualizarFuncionariosSub$.next(true)));
+    return this.http.delete<any>(`${this.baseUrl}/${func.idFuncionario}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(tap(() => this.atualizarFuncionariosSub$.next(true)));
   }
 
   getFuncionarioById(id: number): Observable<Funcionario>{
@@ -60,11 +72,19 @@ export class FuncionarioService {
     // @return o funcionario que acabou de ser salvo
     // pipe é utilizado para os operadores RXJS, map modifica cada dado retornado pelo obsevable
 
+    const token = this.authService.recuperarToken()
     if(foto == undefined){
-      return this.http.post<Funcionario>(this.baseUrl, func)
+      return this.http.post<Funcionario>(`${this.baseUrl}/5`, func, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }})
     }
 
-    return this.http.post<Funcionario>(this.baseUrl, func).pipe(map(async (func) => {
+    return this.http.post<Funcionario>(`${this.baseUrl}/5`, func, {
+      headers: {
+        Authorizations: `Bearer ${token}`
+      }
+    }).pipe(map(async (func) => {
       // 1º fazer o upload da imagem e recuperar o link gerado
         if(foto != undefined){  
         const linkFotoFirabase = await this.uploadImagem(foto);

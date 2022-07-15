@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { VericacaoTokenGuard } from '../guards/vericacao-token.guard';
 import { IdValidatorGuard } from './guards/id-validator.guard';
 import { PodeSairGuard } from './guards/pode-sair.guard';
 import { FuncionarioComponent } from './pages/funcionario/funcionario.component';
@@ -15,9 +16,10 @@ const routes: Routes = [
         path: ':idFuncionario',
         component: FuncionarioComponent,
         canDeactivate: [PodeSairGuard],
-        canActivate: [IdValidatorGuard]
+        canActivate: [IdValidatorGuard, VericacaoTokenGuard]
       }
-    ]
+    ],
+    canActivate: [VericacaoTokenGuard]
   }
 ]
 
