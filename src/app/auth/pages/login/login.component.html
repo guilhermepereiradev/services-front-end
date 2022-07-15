@@ -1,5 +1,26 @@
-
-<form action="">
-    <input type="email" name="" id="">
-    <input type="password">
-</form>
+<div class="container">
+  <div class="gif">
+    <img src="../../../../assets/login.gif" alt="Login">
+  </div>
+  <form class="form-login" [formGroup]="loginForm" (ngSubmit)="login()">
+    <h2>Login</h2>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="johdoe@email.com" formControlName="login">
+        <mat-error>
+          <span>Este campo é obrigatório</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>
+          <span>Este campo é obrigatório</span>
+        </mat-error>
+      </mat-form-field>
+      <button type="submit" mat-raised-button class="button-submit" [disabled]="loginForm.invalid"><mat-icon class="white">arrow_forward_ios</mat-icon></button>
+  </form>
+</div>

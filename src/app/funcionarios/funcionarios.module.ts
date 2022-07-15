@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmarExclusaoComponent } from './components/confirmar-exclusao/confirmar-exclusao.component';
 import { SalvandoFuncionarioComponent } from './components/salvando-funcionario/salvando-funcionario.component';
 import { PodeSairComponent } from './components/pode-sair/pode-sair.component';
+import { NavbarComponent } from '../components/navbar/navbar.component';
 
 
 @NgModule({
@@ -19,13 +20,14 @@ import { PodeSairComponent } from './components/pode-sair/pode-sair.component';
     FormFuncionarioComponent,
     ConfirmarExclusaoComponent,
     SalvandoFuncionarioComponent,
-    PodeSairComponent
+    PodeSairComponent,
+    NavbarComponent
   ],
   imports: [
     CommonModule,
     FuncionariosRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class FuncionariosModule { }

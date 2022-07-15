@@ -68,7 +68,7 @@ export class FuncionarioComponent implements OnInit {
           email: this.funcionario.email,
           foto: ''
           });
-
+          console.log(this.funcionario)
           this.fotoPreview = this.funcionario.foto;
           this.valorMudou();
       }, (erro: HttpErrorResponse) => {
@@ -92,7 +92,7 @@ export class FuncionarioComponent implements OnInit {
     
     // o objeto entre {...obj} | cria um copia f e formNovoFunc apontam pra lugares diferentes 
     const f: Funcionario = {...this.formNovoFunc.value};
-    f.id = this.funcionario.id;
+    f.idFuncionario = this.funcionario.idFuncionario;
     f.foto = this.funcionario.foto;
     const temFoto: boolean = this.formNovoFunc.value.foto.length > 0;
 

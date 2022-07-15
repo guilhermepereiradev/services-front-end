@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100vh;
+}
+
+.form-login{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+.button-submit{
+    background-color: #407BFF;
+
+}
+
+.white{
+    color: white;
+}
