@@ -2,9 +2,10 @@
     <mat-toolbar-row>
       <h1>Services</h1>
       <span class="separador"></span>
-      <button mat-button [matMenuTriggerFor]="menuFuncionarios">Funcionários</button>
+      <button mat-button [matMenuTriggerFor]="menuFuncionarios"><mat-icon>menu</mat-icon></button>
       <mat-menu #menuFuncionarios="matMenu">
-        <a mat-menu-item routerLink="/funcionarios">Listar</a>
+        <a mat-menu-item routerLink="/funcionarios">Funcionarios</a>
+        <a mat-menu-item routerLink="/clientes">Clientes</a>
       </mat-menu>
       <button mat-icon-button (click)="authService.signOut()"><mat-icon>logout</mat-icon></button>
     </mat-toolbar-row>

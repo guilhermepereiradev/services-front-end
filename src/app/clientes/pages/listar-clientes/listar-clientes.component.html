@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <aside id="lateral">
+        <h2>Clientes</h2>
+    </aside>
+    <main>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+        <button mat-mini-fab color="accent" (click)="abrirFormCliente()" id="add"><mat-icon>add</mat-icon></button>
+
+        <div>
+            <table mat-table [dataSource]="clientes" class="mat-elevation-z8">
+                
+                <ng-container matColumnDef="idCliente">
+                  <th mat-header-cell *matHeaderCellDef>#</th>
+                  <td mat-cell *matCellDef="let c"> {{c.idCliente}}</td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="nome">
+                  <th mat-header-cell *matHeaderCellDef> Nome </th>
+                  <td mat-cell *matCellDef="let c"> {{c.nome}} </td>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef> Email </th>
+                  <td mat-cell *matCellDef="let c"> {{c.email}} </td>
+                </ng-container>
+              
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="endereco">
+                  <th mat-header-cell *matHeaderCellDef> Endereço </th>
+                  <td mat-cell *matCellDef="let c"> {{ c.endereco != null ? c.endereco.rua : "endereco não cadastrado" }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acoes">
+                    <th mat-header-cell *matHeaderCellDef> Ações </th>
+                    <td mat-cell *matCellDef="let c">
+                        <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+                        <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+                    </td>
+                  </ng-container>
+                <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+                <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+
+              </table>
+            </div>
+    </main>
+</div>

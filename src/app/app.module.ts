@@ -10,13 +10,10 @@ import { AngularFireModule } from '@angular/fire/compat/'
 import { environment } from 'src/environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-import { CargosComponent } from './cargos/cargos.component';
-
 @NgModule({
   //componentes, pipes e diretivas
   declarations: [
-    AppComponent,
-    CargosComponent,
+    AppComponent
   ],
   // modulos
   imports: [
@@ -27,7 +24,6 @@ import { CargosComponent } from './cargos/cargos.component';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule
-    
   ],
   // qualque estrutura do angular que tiver decorator Injectable
   providers: [
